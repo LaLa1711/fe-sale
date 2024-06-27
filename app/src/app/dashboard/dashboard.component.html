@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Course Platform</title>
+  <link rel="" href="styles.css">
+</head>
+<body>
+<header class="header">
+  <div class="container">
+    <div class="logo">
+      <img src="https://via.placeholder.com/100x50" alt="Logo">
+    </div>
+    <div class="search-bar">
+      <input type="text" placeholder="Tìm khóa học, giảng viên bạn quan tâm">
+      <button>Tìm kiếm</button>
+    </div>
+    <div class="user-actions">
+    
+      <button (click)="openDialog()">Đăng ký khoá học</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <!-- <img src="https://via.placeholder.com/800x200" alt="Banner" class="banner-image"> -->
+    <img src="https://images.pexels.com/photos/1229356/pexels-photo-1229356.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="Banner" class="banner-image"/>
+    <h1>Nâng tầm bản thân</h1>
+
+    <div class="stats">
+      <span>300,000+ học viên</span>
+      <span>1000+ khóa học</span>
+      <span>500+ giảng viên</span>
+    </div>
+  </div>
+</section>
+
+<section class="categories">
+  <div class="container">
+    <h2>Hôm nay bạn muốn học gì?</h2>
+    <div class="category-list">
+      <div class="category" *ngFor="let course of dataSource; let i = index">
+        <img [src]="images[course.id]" [alt]="course.name">
+        <span><b>{{ course.name }}</b></span>
+        <span>{{ course.description }}</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div class="pagination-container">
+  <div class="pagination">
+    <button (click)="prevPage()" [disabled]="pageIndex === 1">Previous</button>
+    <span *ngFor="let page of pages" (click)="goToPage(page)" [class.active]="page === pageIndex">{{ page }}</span>
+    <button (click)="nextPage()" [disabled]="pageIndex === totalPages">Next</button>
+  </div>
+</div>
+
+<div class="modal" [class.show]="isVisible">
+  <div class="modal-content">
+    <span class="close" (click)="handleCancel()">&times;</span>
+    <h2>{{ dialogTitle }}</h2>
+    <form>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" [(ngModel)]="registerCoursesDto.name" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" [(ngModel)]="registerCoursesDto.email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone</label>
+        <input type="text" id="phone" [(ngModel)]="registerCoursesDto.phone" name="phone" required>
+      </div>
+      <div class="form-group">
+        <label for="clan">Clan</label>
+        <input type="text" id="clan" [(ngModel)]="registerCoursesDto.clan" name="clan" required>
+      </div>
+      <div class="form-group">
+        <label for="courses">Courses</label>
+        <input type="text" id="courses" [(ngModel)]="registerCoursesDto.courses" name="courses" required>
+      </div>
+      <button type="button" class="btn primary" (click)="onSubmit()">Submit</button>
+      <button type="button"  class="btn secondary" (click)="handleCancel()">Cancel</button>
+    </form>
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-section about">
+        <h3>About Us</h3>
+        <p>We provide the best online courses to help you improve your skills and advance your career.</p>
+      </div>
+      <div class="footer-section links">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Courses</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-section contact">
+        <h3>Contact Us</h3>
+        <p>Email: quoctai&#64;gmail.com</p>
+        <p>Phone: 09 999 999 999</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2023 Online Course Platform | All rights reserved.
+    </div>
+  </div>
+</footer>
+</body>
+</html>

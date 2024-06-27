@@ -1,0 +1,76 @@
+<header class="header">
+  <div class="container">
+    <div class="logo">
+      <img src="https://via.placeholder.com/100x50" alt="Logo">
+    </div>
+    <div class="search-bar">
+      <input type="text" placeholder="Tìm khóa">
+      <button>Tìm kiếm</button>
+    </div>
+    <div class="user-actions">
+      <button>Đăng nhập</button>
+      <button (click)="logout()">Đăng xuất</button>
+    </div>
+  </div>
+</header>
+<div class="container">
+  <h2>Course Management</h2>
+  <button class="btn primary" (click)="openAddEditDialog('Add')">Create</button>
+
+  <table class="styled-table">
+    <thead>
+    <tr>
+      <th>STT</th>
+      <th>Image</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let course of dataSource; let i = index">
+      <td>{{ i + 1 + (pageIndex - 1) * pageSize }}</td>
+      <td>
+        <img [src]="images[course.id]" [alt]="course.name" style="max-width: 50px;">
+      </td>
+      <td>{{ course.name }}</td>
+      <td>{{ course.description }}</td>
+      <td>
+        <button class="btn primary" (click)="openAddEditDialog('Edit', course)">Edit</button>
+        <button class="btn danger" (click)="deleteCourse(course.id)">Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div class="pagination-container">
+    <div class="pagination">
+      <button class="btn" (click)="prevPage()" [disabled]="pageIndex === 1">Previous</button>
+      <span *ngFor="let page of pages" (click)="goToPage(page)" [class.active]="page === pageIndex">{{ page }}</span>
+      <button class="btn" (click)="nextPage()" [disabled]="pageIndex === totalPages">Next</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" [class.show]="isVisible">
+  <div class="modal-content">
+    <span class="close" (click)="handleCancel()">&times;</span>
+    <h2>{{ dialogTitle }}</h2>
+    <form>
+      <div class="form-group">
+        <label for="name">Course Name</label>
+        <input type="text" id="name" [(ngModel)]="name" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" [(ngModel)]="description" name="description" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="file">Course Image</label>
+        <input type="file" id="file" (change)="onFileSelected($event)" accept="image/*">
+      </div>
+      <button type="button" class="btn primary" (click)="onSubmit()">Submit</button>
+      <button type="button" class="btn" (click)="handleCancel()">Cancel</button>
+    </form>
+  </div>
+</div>
